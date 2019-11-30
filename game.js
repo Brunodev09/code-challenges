@@ -3,8 +3,9 @@ function checkPalindrome(inputString) {
 }
 
 function isSequence(arr, index) {
-	let aux = [...arr];
-	aux.splice(index, 1);
+    let aux = [...arr];
+    aux.splice(index, 1);
+    if (aux.length <= 2) return aux[0] < aux[1];
 	console.log(aux);
 	for (let j = 1; j < aux.length - 1; j++) {
 		if (aux[j] >= aux[j + 1] || aux[j] <= aux[j - 1]) return false;
@@ -12,14 +13,14 @@ function isSequence(arr, index) {
 	return true;
 }
 
-function adjacent(arr) {
+function almostIncreasingSequence(sequence) {
 	let bool;
-	for (let i = 1; i < arr.length - 1; i++) {
-		if (arr[i] >= arr[i + 1]) {
-			bool = isSequence(arr, i);
-			if (!bool) return false;
-		} else if (arr[i] <= arr[i - 1]) {
-			bool = isSequence(arr, i - 1);
+	for (let i = 1; i < sequence.length - 1; i++) {
+		if (sequence[i] <= sequence[i - 1]) {
+            if (sequence[i] <= sequence[i - 1] && sequence[i] <= sequence[i + 1] && sequence[i - 1] < sequence[i + 1]) {
+                bool = isSequence(sequence, i);
+            }
+			else bool = isSequence(sequence, i - 1);
 			if (!bool) return false;
 		}
 	}
