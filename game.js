@@ -17,9 +17,9 @@ function almostIncreasingSequence(sequence) {
 	let bool;
 	for (let i = 1; i < sequence.length - 1; i++) {
 		if (sequence[i] <= sequence[i - 1]) {
-            if (sequence[i] <= sequence[i - 1] && sequence[i] <= sequence[i + 1] && sequence[i - 1] < sequence[i + 1]) {
-                bool = isSequence(sequence, i);
-            }
+            		if (sequence[i] <= sequence[i - 1] && sequence[i] <= sequence[i + 1] && sequence[i - 1] < sequence[i + 1]) {
+                		bool = isSequence(sequence, i);
+            		}
 			else bool = isSequence(sequence, i - 1);
 			if (!bool) return false;
 		}
