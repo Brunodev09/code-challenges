@@ -162,6 +162,34 @@ function sortByHeight(a) {
     return a;
 }
 
+// Yes, this one is ugly. But boy was I proud when I finnally made it.
+function reverseInParentheses(inputString) {
+    let char = inputString;
+    let firstBracket;
+    let mapOfIndexesToAvoid = {};
+    for (let i = 0; i < inputString.length; i++) {
+        if (char[i] === ")" && !mapOfIndexesToAvoid[i]) {
+            firstBracket = inputString.toString().slice(0, i);
+            let j;
+            for (j = firstBracket.length; j > 0; j--) {
+                if (firstBracket[j] === "(") break;
+            }
+            mapOfIndexesToAvoid[i] = [];
+            mapOfIndexesToAvoid[i].push(i, j);
+            inputString = inputString.split('');
+            inputString.splice(j, 1, "#");
+            inputString.splice(i, 1, "#");
+            inputString = inputString.join('');
+            let str = inputString.slice(j+1, i).split('').reverse();
+            for (let z = 0; z < str.length; z++) {
+                let cp = inputString.split('');
+                cp.splice(j+1+z, 1, str[z]);
+                inputString = cp.join('');
+            }
+        }
+    }
+    return inputString.split('').filter(k => k !== "#").join('');
+}
 
 
 
