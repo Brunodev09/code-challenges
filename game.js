@@ -191,6 +191,40 @@ function reverseInParentheses(inputString) {
     return inputString.split('').filter(k => k !== "#").join('');
 }
 
+function alternatingSums(a) {
+    let bool = true;
+    let sum = 0, sum2 = 0;
+    let arr = [], arr2 = [];
+    for (let item of a) {
+        if (bool) arr.push(item);
+        else arr2.push(item);
+        bool = !bool;
+    }
+    arr.map(k => sum+=k);
+    arr2.map(k => sum2+=k);
+    return [sum, sum2];
+
+}
+
+function addBorder(picture) {
+    picture = picture.map(k => `*${k}*`);
+    const n = picture[0].length;
+    let str = "";
+    while (str.length !== n) str += "*";
+    picture.splice(0, 0, str);
+    picture.splice(picture.length, 0, str);
+    picture = picture.map(k => {
+        if (k.length !== n) {
+            while (k.length !== n) k+="*";
+            return k;
+            
+        }
+        else return k;
+    })
+    return picture;
+}
+
+
 
 
 
