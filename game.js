@@ -224,6 +224,27 @@ function addBorder(picture) {
     return picture;
 }
 
+function areSimilar(a, b) {
+    let failA = {};
+    let failB = {};
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) {
+            if (!failA[a[i]]) failA[a[i]] = 1;
+            if (!failB[b[i]]) failB[b[i]] = 1;
+            failA[a[i]]++;
+            failB[b[i]]++;
+        }
+    }
+    for (let key in failA) {
+        if (!failB[key] || failA[key] !== failB[key]) return false;
+    }
+    for (let key in failB) {
+        if (!failA[key] || failA[key] !== failB[key]) return false;
+    }
+    return Object.keys(failA).length <= 2;
+}
+
 
 
 
