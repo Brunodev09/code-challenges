@@ -259,7 +259,8 @@ function arrayChange(inputArray) {
 }
 
 function palindromeRearranging(inputString) {
-	inputString = inputString.toLowerCase();
+    if (inputString.split('').reverse().join('') === inputString) return true;
+    if (inputString.length === 1) return true;
 	let charMap = {};
 	let odds = 0;
 
@@ -268,12 +269,11 @@ function palindromeRearranging(inputString) {
 		else charMap[char]++;
 	}
 	console.log(charMap);
-	if (inputString.length === 1) return true;
 	for (let key in charMap) {
 		if (charMap[key] % 2 !== 0 && charMap[key] !== 1) return false;
 		if (charMap[key] === 1) odds++;
-	}
-	if (odds > 1) return false;
+    }
+    if (odds > 1) return false;
 	return true;
 }
 // console.log(palindromeRearranging('racecar'));
