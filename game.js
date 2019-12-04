@@ -245,6 +245,20 @@ function areSimilar(a, b) {
     return Object.keys(failA).length <= 2;
 }
 
+function arrayChange(inputArray) {
+    let moves = 0;
+    for (let i = 0; i < inputArray.length; i++) {
+        const delta = inputArray[i + 1] - inputArray[i];
+        if (delta < 1) {
+            inputArray[i+1]++;
+            i--;
+            moves++;
+        }
+    }
+    return moves;
+}
+
+
 
 
 
