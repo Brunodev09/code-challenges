@@ -258,7 +258,33 @@ function arrayChange(inputArray) {
     return moves;
 }
 
+function palindromeRearranging(inputString) {
+	inputString = inputString.toLowerCase();
+	let charMap = {};
+	let odds = 0;
 
+	for (let char of inputString) {
+		if (!charMap[char]) charMap[char] = 1;
+		else charMap[char]++;
+	}
+	console.log(charMap);
+	if (inputString.length === 1) return true;
+	for (let key in charMap) {
+		if (charMap[key] % 2 !== 0 && charMap[key] !== 1) return false;
+		if (charMap[key] === 1) odds++;
+	}
+	if (odds > 1) return false;
+	return true;
+}
+// console.log(palindromeRearranging('racecar'));
+
+function factorial(n) {
+	let sum = n;
+	for (let i = n - 1; i > 0; i--) {
+		sum *= i;
+	}
+	return sum;
+}
 
 
 
