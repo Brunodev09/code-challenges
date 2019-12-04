@@ -1,5 +1,15 @@
+// Given a year, return the century it is in. The first century spans from the year 1 up to and including the year 100, the second - from the year 101 up to and including the year 200, etc.
+
+// Example
+
+// For year = 1905, the output should be centuryFromYear(year) = 20; For year = 1700, the output should be centuryFromYear(year) = 17.
+
+// Given the string, check if it is a palindrome.
+
+// Example
+
 function centuryFromYear(year) {
-    return year % 100 === 0 ? year/100 : Math.floor((year/100)+1)
+    return year % 100 === 0 ? year / 100 : Math.floor((year / 100) + 1)
 }
 
 
@@ -26,75 +36,150 @@ function fibonacci(n) {
 function recursiveFib(n) {
     if (!n) return 0;
     if (n === 1 || n === 2) return 1;
-    return recursiveFib(n-2) + recursiveFib(n-1);
+    return recursiveFib(n - 2) + recursiveFib(n - 1);
 }
+
+// Given the string, check if it is a palindrome.
+
+// Example
+
+// For inputString = "aabaa", the output should be checkPalindrome(inputString) = true; For inputString = "abac", the output should be checkPalindrome(inputString) = false; For inputString = "a", the output should be checkPalindrome(inputString) = true.
 
 function checkPalindrome(inputString) {
     return inputString.split('').reverse().join('') === inputString;
 }
 
+// Given a sequence of integers as an array, determine whether it is possible to obtain a strictly increasing sequence by removing no more than one element from the array.
+
+// Note: sequence a0, a1, ..., an is considered to be a strictly increasing if a0 < a1 < ... < an. Sequence containing only one element is also considered to be strictly increasing.
+
+// Example
+
+// For sequence = [1, 3, 2, 1], the output should be almostIncreasingSequence(sequence) = false.
+
+// There is no one element in this array that can be removed in order to get a strictly increasing sequence.
+
+// For sequence = [1, 3, 2], the output should be almostIncreasingSequence(sequence) = true.
+
+// You can remove 3 from the array to get the strictly increasing sequence [1, 2]. Alternately, you can remove 2 to get the strictly increasing sequence [1, 3].
+
 function isSequence(arr, index) {
     let aux = [...arr];
     aux.splice(index, 1);
     if (aux.length <= 2) return aux[0] < aux[1];
-	console.log(aux);
-	for (let j = 1; j < aux.length - 1; j++) {
-		if (aux[j] >= aux[j + 1] || aux[j] <= aux[j - 1]) return false;
-	}
-	return true;
+    console.log(aux);
+    for (let j = 1; j < aux.length - 1; j++) {
+        if (aux[j] >= aux[j + 1] || aux[j] <= aux[j - 1]) return false;
+    }
+    return true;
 }
 
 function almostIncreasingSequence(sequence) {
-	let bool;
-	for (let i = 1; i < sequence.length - 1; i++) {
-		if (sequence[i] <= sequence[i - 1]) {
-            		if (sequence[i] <= sequence[i - 1] && sequence[i] <= sequence[i + 1] && sequence[i - 1] < sequence[i + 1]) {
-                		bool = isSequence(sequence, i);
-            		}
-			else bool = isSequence(sequence, i - 1);
-			if (!bool) return false;
-		}
-	}
-	return true;
+    let bool;
+    for (let i = 1; i < sequence.length - 1; i++) {
+        if (sequence[i] <= sequence[i - 1]) {
+            if (sequence[i] <= sequence[i - 1] && sequence[i] <= sequence[i + 1] && sequence[i - 1] < sequence[i + 1]) {
+                bool = isSequence(sequence, i);
+            }
+            else bool = isSequence(sequence, i - 1);
+            if (!bool) return false;
+        }
+    }
+    return true;
 }
 
+
+// Ratiorg got statues of different sizes as a present from CodeMaster for his birthday, each statue having an non-negative integer size. Since he likes to make things perfect, he wants to arrange them from smallest to largest so that each statue will be bigger than the previous one exactly by 1. He may need some additional statues to be able to accomplish that. Help him figure out the minimum number of additional statues needed.
+
+// Example
+
+// For statues = [6, 2, 3, 8], the output should be makeArrayConsecutive2(statues) = 3.
+
+// Ratiorg needs statues of sizes 4, 5 and 7.
 function maxStatues(arr) {
-	arr.sort((a, b) => a - b);
-	let c = 0;
-	console.log(arr);
-	for (let i = 0; i < arr.length - 1; i++) {
-		if (arr[i + 1] - arr[i] > 1) c += arr[i + 1] - arr[i] - 1;
-	}
-	return c;
+    arr.sort((a, b) => a - b);
+    let c = 0;
+    console.log(arr);
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i + 1] - arr[i] > 1) c += arr[i + 1] - arr[i] - 1;
+    }
+    return c;
 }
 
+// Below we will define an n-interesting polygon. Your task is to find the area of a polygon for a given n.
+
+// A 1-interesting polygon is just a square with a side of length 1. An n-interesting polygon is obtained by taking the n - 1-interesting polygon and appending 1-interesting polygons to its rim, side by side. You can see the 1-, 2-, 3- and 4-interesting polygons in the picture below.
+
+// Example
+
+// For n = 2, the output should be shapeArea(n) = 5; For n = 3, the output should be shapeArea(n) = 13.
 function square(n) {
-	if (n === 1) return n;
-	let acc = 1;
-	for (let i = 1; i <= n; i++) {
-		acc += 4 * i;
-		console.log(acc);
-	}
-	return acc;
+    if (n === 1) return n;
+    let acc = 1;
+    for (let i = 1; i <= n; i++) {
+        acc += 4 * i;
+        console.log(acc);
+    }
+    return acc;
 }
+
+// After becoming famous, the CodeBots decided to move into a new building together. Each of the rooms has a different cost, and some of them are free, but there's a rumour that all the free rooms are haunted! Since the CodeBots are quite superstitious, they refuse to stay in any of the free rooms, or any of the rooms below any of the free rooms.
+
+// Given matrix, a rectangular matrix of integers, where each value represents the cost of the room, your task is to return the total sum of all rooms that are suitable for the CodeBots (ie: add up all the values that don't appear below a 0).
+
+// Example
+
+// For
+
+// matrix = [[0, 1, 1, 2], [0, 5, 0, 0], [2, 0, 3, 3]] the output should be matrixElementsSum(matrix) = 9.
+
+// example 1
+
+// There are several haunted rooms, so we'll disregard them as well as any rooms beneath them. Thus, the answer is 1 + 5 + 1 + 2 = 9.
+
+// For
+
+// matrix = [[1, 1, 1, 0], [0, 5, 0, 1], [2, 1, 3, 10]] the output should be matrixElementsSum(matrix) = 9.
+
+// example 2
+
+// Note that the free room in the final column makes the full column unsuitable for bots (not just the room directly beneath it). Thus, the answer is 1 + 1 + 1 + 5 + 1 = 9.
 
 function matrixElementsSum(matrix) {
-	let sum = 0;
-	for (let i = 1; i < matrix.length; i++) {
-		for (let j = 0; j < matrix[i].length; j++) {
-			console.log(matrix);
-			if (!matrix[i - 1][j]) matrix[i][j] = 0;
-		}
-	}
-	for (let i = 0; i < matrix.length; i++) {
-		matrix[i] = matrix[i].filter(k => k);
-	}
-	matrix.map(k => k.map(w => (sum += w)));
-	console.log(matrix, sum);
-	return sum;
+    let sum = 0;
+    for (let i = 1; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+            console.log(matrix);
+            if (!matrix[i - 1][j]) matrix[i][j] = 0;
+        }
+    }
+    for (let i = 0; i < matrix.length; i++) {
+        matrix[i] = matrix[i].filter(k => k);
+    }
+    matrix.map(k => k.map(w => (sum += w)));
+    console.log(matrix, sum);
+    return sum;
 
 }
 
+// Given an array of strings, return another array containing all of its longest strings.
+//
+//     Example
+//
+// For inputArray = ["aba", "aa", "ad", "vcd", "aba"], the output should be
+// allLongestStrings(inputArray) = ["aba", "vcd", "aba"].
+//
+//     Input/Output
+//
+//     [execution time limit] 4 seconds (js)
+//
+//     [input] array.string inputArray
+//
+// A non-empty array.
+//
+//     Guaranteed constraints:
+//     1 ≤ inputArray.length ≤ 10,
+//     1 ≤ inputArray[i].length ≤ 10.
 
 function allLongestStrings(inputArray) {
     let auxArr = [];
@@ -108,8 +193,18 @@ function allLongestStrings(inputArray) {
     return auxArr;
 }
 
+
+// Given two strings, find the number of common characters between them.
+//
+//     Example
+//
+// For s1 = "aabcc" and s2 = "adcaa", the output should be
+// commonCharacterCount(s1, s2) = 3.
+//
+// Strings have 3 common characters - 2 "a"s and 1 "c".
+
 function commonCharacterCount(s1, s2) {
-    let count ={}, count2={}, map = {}, arr = [], sum = 0;
+    let count = {}, count2 = {}, map = {}, arr = [], sum = 0;
     for (let char1 of s1) {
         for (let char2 of s2) {
             if (char1 === char2) map[char1] = true;
@@ -119,7 +214,7 @@ function commonCharacterCount(s1, s2) {
         for (let char of s1) {
             if (char === key) {
                 if (!count[char]) count[char] = 1;
-                else count[char]++;   
+                else count[char]++;
             }
         }
         for (let char of s2) {
@@ -136,6 +231,16 @@ function commonCharacterCount(s1, s2) {
     return sum;
 }
 
+// Ticket numbers usually consist of an even number of digits. A ticket number is considered lucky if the sum of the first half of the digits is equal to the sum of the second half.
+//
+//     Given a ticket number n, determine if it's lucky or not.
+//
+// Example
+//
+// For n = 1230, the output should be
+// isLucky(n) = true;
+// For n = 239017, the output should be
+// isLucky(n) = false.
 
 function isLucky(n) {
     let arr = n.toString().split('');
@@ -144,23 +249,46 @@ function isLucky(n) {
     arr.splice(0, half);
     let sum = 0, sum2 = 0;
     arr.map(k => sum += Number(k));
-    arr2.map(k => sum2+=Number(k));
+    arr2.map(k => sum2 += Number(k));
     return sum === sum2;
 }
+
+// Some people are standing in a row in a park. There are trees between them which cannot be moved. Your task is to rearrange the people by their heights in a non-descending order without moving the trees. People can be very tall!
+//
+//     Example
+//
+// For a = [-1, 150, 190, 170, -1, -1, 160, 180], the output should be
+// sortByHeight(a) = [-1, 150, 160, 170, -1, -1, 180, 190].
 
 function sortByHeight(a) {
     let arr = [];
     for (let i in a) {
-        if (a[i]===-1) arr.push(i);
+        if (a[i] === -1) arr.push(i);
     }
-    a = a.filter(k => k!==-1)
-    a.sort((a,b)=>a-b);
+    a = a.filter(k => k !== -1)
+    a.sort((a, b) => a - b);
     for (let i of arr) {
         a.splice(i, 0, -1);
     }
     console.log(a)
     return a;
 }
+
+// Write a function that reverses characters in (possibly nested) parentheses in the input string.
+//
+//     Input strings will always be well-formed with matching ()s.
+//
+//     Example
+//
+// For inputString = "(bar)", the output should be
+// reverseInParentheses(inputString) = "rab";
+// For inputString = "foo(bar)baz", the output should be
+// reverseInParentheses(inputString) = "foorabbaz";
+// For inputString = "foo(bar)baz(blim)", the output should be
+// reverseInParentheses(inputString) = "foorabbazmilb";
+// For inputString = "foo(bar(baz))blim", the output should be
+// reverseInParentheses(inputString) = "foobazrabblim".
+//     Because "foo(bar(baz))blim" becomes "foo(barzab)blim" and then "foobazrabblim".
 
 // Yes, this one is ugly. But boy was I proud when I finnally made it.
 function reverseInParentheses(inputString) {
@@ -180,16 +308,25 @@ function reverseInParentheses(inputString) {
             inputString.splice(j, 1, "#");
             inputString.splice(i, 1, "#");
             inputString = inputString.join('');
-            let str = inputString.slice(j+1, i).split('').reverse();
+            let str = inputString.slice(j + 1, i).split('').reverse();
             for (let z = 0; z < str.length; z++) {
                 let cp = inputString.split('');
-                cp.splice(j+1+z, 1, str[z]);
+                cp.splice(j + 1 + z, 1, str[z]);
                 inputString = cp.join('');
             }
         }
     }
     return inputString.split('').filter(k => k !== "#").join('');
 }
+
+// Several people are standing in a row and need to be divided into two teams. The first person goes into team 1, the second goes into team 2, the third goes into team 1 again, the fourth into team 2, and so on.
+//
+//     You are given an array of positive integers - the weights of the people. Return an array of two integers, where the first element is the total weight of team 1, and the second element is the total weight of team 2 after the division is complete.
+//
+//     Example
+//
+// For a = [50, 60, 60, 45, 70], the output should be
+// alternatingSums(a) = [180, 105].
 
 function alternatingSums(a) {
     let bool = true;
@@ -200,13 +337,30 @@ function alternatingSums(a) {
         else arr2.push(item);
         bool = !bool;
     }
-    arr.map(k => sum+=k);
-    arr2.map(k => sum2+=k);
+    arr.map(k => sum += k);
+    arr2.map(k => sum2 += k);
     return [sum, sum2];
 
 }
 
-function addBorder(picture) {
+// Given a rectangular matrix of characters, add a border of asterisks(*) to it.
+//
+//     Example
+//
+// For
+//
+// picture = ["abc",
+//     "ded"]
+// the output should be
+//
+// addBorder(picture) =
+//     ["*****",
+//     "*abc*",
+//     "*ded*",
+//     "*****"]
+
+
+    function addBorder(picture) {
     picture = picture.map(k => `*${k}*`);
     const n = picture[0].length;
     let str = "";
@@ -215,14 +369,35 @@ function addBorder(picture) {
     picture.splice(picture.length, 0, str);
     picture = picture.map(k => {
         if (k.length !== n) {
-            while (k.length !== n) k+="*";
+            while (k.length !== n) k += "*";
             return k;
-            
+
         }
         else return k;
-    })
+    });
     return picture;
 }
+
+// Two arrays are called similar if one can be obtained from another by swapping at most one pair of elements in one of the arrays.
+//
+//     Given two arrays a and b, check whether they are similar.
+//
+//     Example
+//
+// For a = [1, 2, 3] and b = [1, 2, 3], the output should be
+// areSimilar(a, b) = true.
+//
+//     The arrays are equal, no need to swap any elements.
+//
+//     For a = [1, 2, 3] and b = [2, 1, 3], the output should be
+// areSimilar(a, b) = true.
+//
+//     We can obtain b from a by swapping 2 and 1 in b.
+//
+//     For a = [1, 2, 2] and b = [2, 1, 1], the output should be
+// areSimilar(a, b) = false.
+//
+//     Any swap of any two elements either in a or in b won't make a and b equal.
 
 function areSimilar(a, b) {
     let failA = {};
@@ -244,13 +419,18 @@ function areSimilar(a, b) {
     }
     return Object.keys(failA).length <= 2;
 }
-
+// You are given an array of integers. On each move you are allowed to increase exactly one of its element by one. Find the minimal number of moves required to obtain a strictly increasing sequence from the input.
+//
+//     Example
+//
+// For inputArray = [1, 1, 1], the output should be
+// arrayChange(inputArray) = 3.
 function arrayChange(inputArray) {
     let moves = 0;
     for (let i = 0; i < inputArray.length; i++) {
         const delta = inputArray[i + 1] - inputArray[i];
         if (delta < 1) {
-            inputArray[i+1]++;
+            inputArray[i + 1]++;
             i--;
             moves++;
         }
@@ -258,33 +438,181 @@ function arrayChange(inputArray) {
     return moves;
 }
 
+function factorial(n) {
+    let sum = n;
+    for (let i = n - 1; i > 0; i--) {
+        sum *= i;
+    }
+    return sum;
+}
+
+// Given a string, find out if its characters can be rearranged to form a palindrome.
+//
+//     Example
+//
+// For inputString = "aabb", the output should be
+// palindromeRearranging(inputString) = true.
+//
+//     We can rearrange "aabb" to make "abba", which is a palindrome.
+
 function palindromeRearranging(inputString) {
     if (inputString.split('').reverse().join('') === inputString) return true;
     if (inputString.length === 1) return true;
-	let charMap = {};
-	let odds = 0;
+    let charMap = {};
+    let odds = 0;
 
-	for (let char of inputString) {
-		if (!charMap[char]) charMap[char] = 1;
-		else charMap[char]++;
-	}
-	console.log(charMap);
-	for (let key in charMap) {
-		if (charMap[key] % 2 !== 0 && charMap[key] !== 1) return false;
-		if (charMap[key] === 1) odds++;
+    for (let char of inputString) {
+        if (!charMap[char]) charMap[char] = 1;
+        else charMap[char]++;
     }
-    if (odds > 1) return false;
-	return true;
+    console.log(charMap);
+    for (let key in charMap) {
+        if (charMap[key] % 2 !== 0) odds++;
+    }
+    return odds <= 1;
 }
-// console.log(palindromeRearranging('racecar'));
 
-function factorial(n) {
-	let sum = n;
-	for (let i = n - 1; i > 0; i--) {
-		sum *= i;
-	}
-	return sum;
+// console.log(palindromeRearranging('degffgeddee'));
+
+// Call two arms equally strong if the heaviest weights they each are able to lift are equal.
+//
+//     Call two people equally strong if their strongest arms are equally strong (the strongest arm can be both the right and the left), and so are their weakest arms.
+//
+//     Given your and your friend's arms' lifting capabilities find out if you two are equally strong.
+//
+//     Example
+//
+// For yourLeft = 10, yourRight = 15, friendsLeft = 15, and friendsRight = 10, the output should be
+// areEquallyStrong(yourLeft, yourRight, friendsLeft, friendsRight) = true;
+// For yourLeft = 15, yourRight = 10, friendsLeft = 15, and friendsRight = 10, the output should be
+// areEquallyStrong(yourLeft, yourRight, friendsLeft, friendsRight) = true;
+// For yourLeft = 15, yourRight = 10, friendsLeft = 15, and friendsRight = 9, the output should be
+// areEquallyStrong(yourLeft, yourRight, friendsLeft, friendsRight) = false.
+//     Input/Output
+//
+//     [execution time limit] 4 seconds (js)
+//
+//     [input] integer yourLeft
+//
+// A non-negative integer representing the heaviest weight you can lift with your left arm.
+//
+//     Guaranteed constraints:
+//     0 ≤ yourLeft ≤ 20.
+//
+//     [input] integer yourRight
+//
+// A non-negative integer representing the heaviest weight you can lift with your right arm.
+//
+// true if you and your friend are equally strong, false otherwise.
+
+function areEquallyStrong(yourLeft, yourRight, friendsLeft, friendsRight) {
+    let strongest = {}, weakest = {};
+    yourLeft >= yourRight ? strongest["me"] = yourLeft : strongest["me"] = yourRight;
+    friendsLeft >= friendsRight ? strongest["friend"] = friendsLeft : strongest["friend"] = friendsRight;
+    yourLeft < yourRight ? weakest["me"] = yourLeft : weakest["me"] = yourRight;
+    friendsLeft < friendsRight ? weakest["friend"] = friendsLeft : weakest["friend"] = friendsRight;
+    return strongest["me"] === strongest["friend"] && weakest["me"] === weakest["friend"];
 }
+
+// console.log(areEquallyStrong(15, 10, 15, 9));
+
+// Given an array of integers, find the maximal absolute difference between any two of its adjacent elements.
+//
+//     Example
+//
+// For inputArray = [2, 4, 1, 0], the output should be
+// arrayMaximalAdjacentDifference(inputArray) = 3.
+// The maximal absolute difference
+
+function arrayMaximalAdjacentDifference(inputArray) {
+    let max = 0;
+    for (let i = 1; i < inputArray.length - 1; i++) {
+        if (!max) max = Math.abs(inputArray[i] - inputArray[i + 1]);
+        if (Math.abs(inputArray[i] - inputArray[i + 1]) > max) max = Math.abs(inputArray[i] - inputArray[i + 1]);
+        if (Math.abs(inputArray[i] - inputArray[i - 1]) > max) max = Math.abs(inputArray[i] - inputArray[i - 1]);
+    }
+    return max;
+}
+
+// console.log(arrayMaximalAdjacentDifference([2, 4, 1, 0]));
+
+
+// An IP address is a numerical label assigned to each device (e.g., computer, printer) participating in a computer network that uses the Internet Protocol for communication. There are two versions of the Internet protocol, and thus two versions of addresses. One of them is the IPv4 address.
+//
+//     Given a string, find out if it satisfies the IPv4 address naming rules.
+//
+//     Example
+//
+// For inputString = "172.16.254.1", the output should be
+// isIPv4Address(inputString) = true;
+//
+// For inputString = "172316254.1", the output should be
+// isIPv4Address(inputString) = false.
+//
+// 316 is not in range [0, 255].
+//
+//     For inputString = ".254.255.0", the output should be
+// isIPv4Address(inputString) = false.
+//
+//     There is no first number.
+// true if inputString satisfies the IPv4 address naming rules, false otherwise.
+
+function isIPv4Address(inputString) {
+    const range = [0, 255];
+    const sections = 4;
+
+    let arr = inputString.split('.');
+    for (let key in arr) {
+        if (!arr[key]) {
+            if (arr.length > sections) return false;
+            arr.splice(key, 1);
+        }
+    }
+    if (arr.length !== sections) return false;
+    for (let key in arr) {
+        arr[key] = arr[key].replace(".", "");
+        if (!isNaN(arr[key])) arr[key] = Number(arr[key]);
+    }
+    for (let ip of arr) {
+        if (ip === null || ip === undefined || typeof ip === "string") return false;
+        if (ip < range[0] || ip > range[1]) return false;
+    }
+    return true;
+}
+
+// console.log(isIPv4Address("0..1.0.0"));
+
+// You are given an array of integers representing coordinates of obstacles situated on a straight line.
+//
+//     Assume that you are jumping from the point with coordinate 0 to the right. You are allowed only to make jumps of the same length represented by some integer.
+//
+//     Find the minimal length of the jump enough to avoid all the obstacles.
+//
+//     Example
+//
+// For inputArray = [5, 3, 6, 7, 9], the output should be
+// avoidObstacles(inputArray) = 4.
+// [3, 5, 6, 7, 9]
+
+
+function avoidObstacles(inputArray) {
+    let counter = 2;
+    let jump;
+    for (let i = 0; i < inputArray.length; i++) {
+        while (inputArray[i] % counter === 0) {
+            counter++;
+            i = 0;
+        }
+        jump = counter;
+    }
+    return jump;
+
+}
+
+// console.log(avoidObstacles([5, 3, 6, 7, 9]));
+
+
+
 
 
 
