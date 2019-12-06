@@ -669,4 +669,72 @@ function decideGreater(str, str2) {
 
 
 
+// You are given two non-empty linked lists representing two non-negative integers.
+// The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+//
+//     You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+//
+//     Example:
+//
+// Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+// Output: 7 -> 0 -> 8
+// Explanation: 342 + 465 = 807.
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+
+// {"val":2,"next":{"val":4,"next":{"val":3,"next":null}}}
+// {"val":5,"next":{"val":6,"next":{"val":4,"next":null}}}
+
+var addTwoNumbers = function(l1, l2) {
+	let current1 = l1;
+	let current2 = l2;
+	let sum = 0;
+	let hash = current1.val + '';
+	let hash2 = current2.val + '';
+	while (current1) {
+		current1 = current1.next;
+		if (current1) hash = current1.val + hash;
+	}
+	while (current2) {
+		current2 = current2.next;
+		if (current2) hash2 = current2.val + hash2;
+	}
+	// Using manual sum to prevent integer overflow.
+	// sum = (Number(hash) + Number(hash2)).toString().split('').reverse();
+	sum = addStrings(hash, hash2)
+		.toString()
+		.split('')
+		.reverse();
+	let linkedArr = [];
+	for (let item of sum) {
+		linkedArr.push(new ListNode(item));
+	}
+
+	for (let i = 0; i < linkedArr.length - 1; i++) {
+		linkedArr[i].next = linkedArr[i + 1];
+	}
+	return linkedArr[0];
+};
+
+class ListNode {
+	constructor(val) {
+		this.val = val;
+		this.next = null;
+	}
+}
+
+
+
+
 
