@@ -640,6 +640,32 @@ function avoidObstacles(inputArray) {
 
 
 
+function eachSum(num1, num2) {
+    let { greater, smaller } = decideGreater(num1, num2);
+    let hash = "";
+    let aux = 0;
+    if (greater.length !== smaller.length) {
+        while (smaller.length !== greater.length) {
+            smaller = "0" + smaller;
+        }
+    }
+    for (let i = greater.length - 1; i >= 0; i--) {
+        let sum = Number(smaller[i]) + Number(greater[i]) + Number(aux);
+        if (sum > 9 && i !== 0) {
+            aux = (sum + "")[0];
+            sum = (sum + "")[1];
+        }
+        else aux = 0;
+        hash = (sum + "").concat(hash);
+    }
+    return hash;
+}
+
+function decideGreater(str, str2) {
+    if (str.length >= str2.length) return {greater: str, smaller: str2};
+    return {greater: str2, smaller: str};
+}
+
 
 
 
