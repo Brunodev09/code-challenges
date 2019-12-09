@@ -879,7 +879,6 @@ var findMedianSortedArrays = function(nums1, nums2) {
 	return ((arr[target] + arr[target2]) / 2).toFixed(1);
 };
 
-console.log(findMedianSortedArrays([1, 3], [2]));
 
 
 
