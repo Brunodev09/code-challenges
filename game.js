@@ -865,21 +865,44 @@ var lengthOfLongestSubstring = function(s) {
 // The median is (2 + 3)/2 = 2.5
 
 var findMedianSortedArrays = function(nums1, nums2) {
-	let arr;
-
-	if (nums1[0] === undefined || nums1[0] === null) arr = nums2;
-	else if (nums2[0] === undefined || nums2[0] === null) arr = nums1;
-	else arr = [...nums1, ...nums2];
-
-	if (arr.length === 1) return (arr[0]).toFixed(1);
-
-	if (arr.length % 2 !== 0) return (arr[arr.length / 2]).toFixed(1);
-	const target = arr.length / 2;
-	const target2 = (arr.length / 2) - 1;
-	return ((arr[target] + arr[target2]) / 2).toFixed(1);
+	let arr = [...nums1, ...nums2];
+	arr.sort((a,b) => a-b);
+	if (arr.length % 2 !== 0) return (arr[Math.floor(arr.length / 2)]);
+	return ((arr[arr.length / 2] + arr[(arr.length / 2) - 1]) / 2);
 };
 
+// console.log(findMedianSortedArrays([1,2,3,4,5],[]));
 
+// Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+//
+// Example 1:
+//
+// Input: "babad"
+// Output: "bab"
+// Note: "aba" is also a valid answer.
+//     Example 2:
+//
+// Input: "cbbd"
+// Output: "bb"
+
+var longestPalindrome = function (s) {
+    let sequence = "";
+    let longest = "";
+    for (let x = 0; x < s.length; x++) {
+        for (let i = 0; i < s.length; i++) {
+            sequence += s[i];
+            if (sequence.split('').reverse().join('') === sequence) {
+                if (sequence.length > longest.length) longest = sequence;
+            }
+        }
+        s = s.substring(1);
+        sequence = "";
+	}
+
+    return longest;
+};
+
+console.log(longestPalindrome('civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth'));
 
 
 
