@@ -700,7 +700,7 @@ function addArr(nums, target) {
 
 // console.log(addArr([2, 7, 11, 15], 9));
 
-var addStrings = function(num1, num2) {
+var addStrings = function (num1, num2) {
 	let { greater, smaller } = decideGreater(num1, num2);
 	let hash = '';
 	let aux = 0;
@@ -752,7 +752,7 @@ function decideGreater(str, str2) {
 // {"val":2,"next":{"val":4,"next":{"val":3,"next":null}}}
 // {"val":5,"next":{"val":6,"next":{"val":4,"next":null}}}
 
-var addTwoNumbers = function(l1, l2) {
+var addTwoNumbers = function (l1, l2) {
 	let current1 = l1;
 	let current2 = l2;
 	let sum = 0;
@@ -815,7 +815,7 @@ class ListNode {
 // dvdf
 // tmmzuxt
 
-var lengthOfLongestSubstring = function(s) {
+var lengthOfLongestSubstring = function (s) {
 	let sequence = "";
 	let biggestSequence = 0;
 	for (let i = 0; i < s.length; i++) {
@@ -826,21 +826,21 @@ var lengthOfLongestSubstring = function(s) {
 				break;
 			}
 		}
-        if (index !== undefined) {
-            if (sequence.length > biggestSequence) biggestSequence = sequence.length;
-            if (!s[index + 1]) {
-                if (sequence.length > biggestSequence) biggestSequence = sequence.length;
-                break;
-            }
+		if (index !== undefined) {
+			if (sequence.length > biggestSequence) biggestSequence = sequence.length;
+			if (!s[index + 1]) {
+				if (sequence.length > biggestSequence) biggestSequence = sequence.length;
+				break;
+			}
 			else s = s.substring(index + 1);
-            sequence = `${s[0]}`;
-            i = 0;
+			sequence = `${s[0]}`;
+			i = 0;
 			continue;
 		}
 		sequence += s[i];
-    }
+	}
 
-    if (sequence.length > biggestSequence) biggestSequence = sequence.length;
+	if (sequence.length > biggestSequence) biggestSequence = sequence.length;
 	return biggestSequence;
 };
 // console.log(lengthOfLongestSubstring("abcabcbb"));
@@ -864,9 +864,9 @@ var lengthOfLongestSubstring = function(s) {
 //
 // The median is (2 + 3)/2 = 2.5
 
-var findMedianSortedArrays = function(nums1, nums2) {
+var findMedianSortedArrays = function (nums1, nums2) {
 	let arr = [...nums1, ...nums2];
-	arr.sort((a,b) => a-b);
+	arr.sort((a, b) => a - b);
 	if (arr.length % 2 !== 0) return (arr[Math.floor(arr.length / 2)]);
 	return ((arr[arr.length / 2] + arr[(arr.length / 2) - 1]) / 2);
 };
@@ -886,23 +886,60 @@ var findMedianSortedArrays = function(nums1, nums2) {
 // Output: "bb"
 
 var longestPalindrome = function (s) {
-    let sequence = "";
-    let longest = "";
-    for (let x = 0; x < s.length; x++) {
-        for (let i = 0; i < s.length; i++) {
-            sequence += s[i];
-            if (sequence.split('').reverse().join('') === sequence) {
-                if (sequence.length > longest.length) longest = sequence;
-            }
-        }
-        s = s.substring(1);
-        sequence = "";
+	let sequence = "";
+	let longest = "";
+	for (let x = 0; x < s.length; x++) {
+		for (let i = 0; i < s.length; i++) {
+			sequence += s[i];
+			if (sequence.split('').reverse().join('') === sequence) {
+				if (sequence.length > longest.length) longest = sequence;
+			}
+		}
+		s = s.substring(1);
+		sequence = "";
 	}
 
-    return longest;
+	return longest;
 };
 
-console.log(longestPalindrome('civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth'));
+// console.log(longestPalindrome('civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth'));
 
+// Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
+/**
+ * @param {number} numRows
+ * @return {number[][]}
+ */
 
+// Input: 5
+// Output:
+// [
+//      [1],
+//     [1,1],
+//    [1,2,1],
+//   [1,3,3,1],
+//  [1,4,6,4,1]
+// ]
+var generate = function (numRows) {
 
+	if (!numRows) return [];
+	
+	let vec = [[1]];
+
+	for (let i = 1; i < numRows; i++) {
+		let elements = [];
+		vec.push(elements);
+		for (let j = 0; j <= i; j++) {
+			if (vec[i - 1]) {
+				if (vec[i - 1][j - 1] && vec[i - 1][j]) {
+					elements.push(vec[i - 1][j - 1] + vec[i - 1][j]);
+				}
+				else {
+					elements.push(1);
+				}
+			} 
+		}
+	}
+	return vec;
+};
+
+console.log(generate(5))
