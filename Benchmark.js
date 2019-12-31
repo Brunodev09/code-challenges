@@ -4,7 +4,7 @@ module.exports = class Benchmark {
         
         for (let func of args) {
             try {
-                if (typeof func !== "function") throw new Error("This class only accept function instances.");
+                if (typeof func !== "function") throw new Error("This class only accepts function instances.");
                 const start = process.hrtime();
                 func();
                 const end = process.hrtime(start);
