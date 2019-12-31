@@ -885,6 +885,9 @@ var findMedianSortedArrays = function (nums1, nums2) {
 // Input: "cbbd"
 // Output: "bb"
 
+// Take another approach, like what is the logic that defines what a palindrome is. This way we escape array calculations.
+// I've done it in another exercise, mapping chars.
+
 var longestPalindrome = function (s) {
 	let sequence = "";
 	let longest = "";
@@ -922,7 +925,7 @@ var longestPalindrome = function (s) {
 var generate = function (numRows) {
 
 	if (!numRows) return [];
-	
+
 	let vec = [[1]];
 
 	for (let i = 1; i < numRows; i++) {
@@ -930,16 +933,128 @@ var generate = function (numRows) {
 		vec.push(elements);
 		for (let j = 0; j <= i; j++) {
 			if (vec[i - 1]) {
-				if (vec[i - 1][j - 1] && vec[i - 1][j]) {
-					elements.push(vec[i - 1][j - 1] + vec[i - 1][j]);
-				}
-				else {
-					elements.push(1);
-				}
+				if (vec[i - 1][j - 1] && vec[i - 1][j]) elements.push(vec[i - 1][j - 1] + vec[i - 1][j]);
+				else elements.push(1);
 			} 
 		}
 	}
 	return vec;
 };
 
-console.log(generate(5))
+// console.log(generate(5))
+
+// You are climbing a stair case. It takes n steps to reach to the top.
+
+// Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+// Note: Given n will be a positive integer.
+
+// Example 1:
+
+// Input: 2
+// Output: 2
+// Explanation: There are two ways to climb to the top.
+// 1. 1 step + 1 step
+// 2. 2 steps
+// Example 2:
+
+// Input: 3
+// Output: 3
+// Explanation: There are three ways to climb to the top.
+// 1. 1 step + 1 step + 1 step
+// 2. 1 step + 2 steps
+// 3. 2 steps + 1 step
+
+// Input: 4
+// Output: 5
+// Explanation: There are five ways to climb to the top.
+// 1. 1 step + 1 step + 1 step + 1 step
+// 2. 2 step + 2 steps
+// 3. 2 steps + 1 step + 1 step
+// 4. 1 step + 1 step + 2 steps
+// 5. 1 step + 2 steps + 1 step
+
+// Input: 5
+// Output: 7
+
+// Input: 6
+// Output: 13
+
+// Inputs  [1, 2, 3, 4, 5, 6, 7]
+// Outputs [1, 2, 3, 5, 13, 21, 34]
+
+// Input = i = 5
+// Possibilites
+// 2 is the maximum number of times that 2 steps can be used not to exceed target
+// Solved by applying Fib sequence. Didn't like it because I couldn't use my logic to bruteforce it. Still trying though.
+
+// Input = i = 5
+// Possibilites
+// p	2 *	2 * 1 = 4
+// i    3   2   1 = 0
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+
+// Using iterative tabulation from Dynamic Programming. 
+
+var climbStairs = function(n) {
+	let golden = [1, 1];
+
+	if (n === 0 || n === 1) return n;
+	
+	let sum = 0;
+
+	for (let i = 2; i <= n; i++) {
+		if (i === 2) sum = golden[0] + golden[1]; 
+		sum = golden[i - 1] + golden[i - 2];
+		golden.push(sum);
+	}
+
+	return golden[golden.length - 1];
+};
+
+// for each step we will have 2 possibilities, but this sum of poss cannot be greater than n
+// console.log(climbStairs(7));
+
+
+// Combinations example -> number with 4 digits, ranging from 0-9, digits can be repeated, how many combinations? 10 * 10 * 10 * 10
+// Permutation example -> number with 4 digits, ranging from 0-9, digits can't be repeated, how many permutations? 10 * 9 * 8 * 7
+// Four friends for 6 chairs, how many permutations? 6 * 5 * 4 * 3 (four friends, one chair less after each choice)
+
+var permutations = function(n, p) {
+	let operator = p;
+	let acc = p;
+
+	for (let i = n; i > 0; i--) {
+		acc--;
+		if (!acc) break;
+		operator *= acc;
+	}
+	return operator;
+
+}
+
+function factorial(n) {
+	let operator = n;
+	let acc = n;
+
+	for (let i = n; i > 0; i--) {
+		acc--;
+		if (!acc) break;
+		operator *= acc;
+	}
+	return operator;
+}
+
+function recursiveFactorial(n) {
+	if (!n) return;
+	if (n === 1) return 1;
+	return n * recursiveFactorial(n - 1);
+}
+
+
+
+console.log(recursiveFactorial(5));
