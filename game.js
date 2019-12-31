@@ -1065,11 +1065,13 @@ function dpFactorial(n) {
 
 
 // console.log(dpFactorial(5));
-
+function test() {
+	let count = 0;
+	while (count < 100000) count++;
+	return count;
+}
 
 let Benchmark = require('./Benchmark');
 
-
-let factorialTest = new Benchmark(dpFactorial, factorial);
-console.log(factorialTest.get())
-
+// let factorialTest = new Benchmark(fibonacci, test);
+// console.log(factorialTest.get())
