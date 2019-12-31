@@ -1055,6 +1055,21 @@ function recursiveFactorial(n) {
 	return n * recursiveFactorial(n - 1);
 }
 
+function dpFactorial(n) {
+	let table = [1];
+	for (let i = 1; i <= n; i++) {
+		table[i] =  i * (table[i - 1]);
+	}
+	return table[n];
+}
 
 
-console.log(recursiveFactorial(5));
+// console.log(dpFactorial(5));
+
+
+let Benchmark = require('./Benchmark');
+
+
+let factorialTest = new Benchmark(dpFactorial, factorial);
+console.log(factorialTest.get())
+
