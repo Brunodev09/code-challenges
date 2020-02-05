@@ -93,10 +93,44 @@ bool almostIncreasingSequence(std::vector<int> vec) {
 }
 
 
+// Ratiorg got statues of different sizes as a present from CodeMaster for his birthday, 
+// each statue having an non-negative integer size.
+// Since he likes to make things perfect, he wants to arrange them from smallest to largest so
+// that each statue will be bigger than the previous one exactly by 1.
+// He may need some additional statues to be able to accomplish that.
+// Help him figure out the minimum number of additional statues needed.
+// Example
+// For statues = [6, 2, 3, 8], the output should be makeArrayConsecutive2(statues) = 3.
+// Ratiorg needs statues of sizes 4, 5 and 7.
+
+int maxStatues(std::vector<int> v) {
+    sort(v.begin(), v.end());
+    int count = 0;
+    for (int i = 0; i < v.size() - 1; i++) {
+        int &current = v[i];
+        int &next = v[i + 1];
+        if ((next - current) > 1) count += v[i + 1] - v[i] - 1;
+    }
+    return count;
+}
+
+// Below we will define an n-interesting polygon. Your task is to find the area 
+// of a polygon for a given n.
+// A 1-interesting polygon is just a square with a side of length 1. 
+// An n-interesting polygon is obtained by taking the n - 1-interesting polygon 
+// and appending 1-interesting polygons to its rim, side by side. 
+// You can see the 1-, 2-, 3- and 4-interesting polygons in the picture below.
+// Example
+// For n = 2, the output should be shapeArea(n) = 5; For n = 3, the output should be shapeArea(n) = 13.
+
+int shapeArea(int n) {
+    
+}
+
 int main(int argc, char *args[]) {
-    std::vector<int> vec = {3, 5, 67, 98, 3};
-    // std::cout << almostIncreasingSequence(vec) << std::endl;
-    almostIncreasingSequence(vec);
+    std::vector<int> vec = {6, 2, 3, 8};
+    std::cout << shapeArea(3) << std::endl;
+    // maxStatues(vec);
     return 0; 
 }
 
