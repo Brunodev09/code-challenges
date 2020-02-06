@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <algorithm>
 #include <vector>
 #include "./m.h"
@@ -162,9 +163,93 @@ int matrixElementsSum(std::vector<std::vector<int>> matrix) {
 // std::cout << matrixElementsSum(m) << std::endl;
 
 
+// Given an array of strings, return another array containing all of its longest strings.
+//     Example
+// For inputArray = ["aba", "aa", "ad", "vcd", "aba"], the output should be
+// allLongestStrings(inputArray) = ["aba", "vcd", "aba"].
+//     Input/Output
+//     [execution time limit] 4 seconds (js)
+//     [input] array.string inputArray
+// A non-empty array.
+//     Guaranteed constraints:
+//     1 ≤ inputArray.length ≤ 10,
+//     1 ≤ inputArray[i].length ≤ 10.
+
+std::vector<std::string> allLongestStrings(std::vector<std::string> inputArray) {
+    int longest = 0;
+    std::vector<std::string> strArr;
+    for (int i = 0; i < inputArray.size(); i++) {
+        if (inputArray[i].size() > longest) {
+            longest = inputArray[i].size();
+            strArr.clear();
+            strArr.push_back(inputArray[i]);
+        }
+        else if (inputArray[i].size() == longest) strArr.push_back(inputArray[i]);
+    }
+    return strArr;
+}
+
+// Given two strings, find the number of common characters between them.
+//     Example
+// For s1 = "aabcc" and s2 = "adcaa", the output should be
+// commonCharacterCount(s1, s2) = 3.
+// Strings have 3 common characters - 2 "a"s and 1 "c".
+
+int commonCharacterCount(std::string s1, std::string s2) {
+    std::map<char, int> map1;
+    std::map<char, int> map2;
+    int counter = 0;
+    
+    for (std::string::size_type i = 0; i < s1.size(); i++) {
+        // C++ maps return the end of the it if the element hasn't been found 
+        // first -> key, second -> value
+        if (map1.find(s1[i]) == map1.end()) {
+            map1.insert(std::make_pair(s1[i], 1));
+        }
+        else {
+            int val = 0;
+            auto it = map1.find(s1[i]);
+            it->second++;
+        }
+    }
+    for (std::string::size_type i = 0; i < s2.size(); i++) {
+        if (map2.find(s2[i]) == map2.end()) {
+            map2.insert(std::make_pair(s2[i], 1));
+        }
+        else {
+            int val = 0;
+            auto it = map2.find(s2[i]);
+            it->second++;
+        }
+    }
+    std::vector<char> chars1 = mLib->keys(map1);
+    std::vector<int> values1 = mLib->values(map1);
+
+    std::vector<char> chars2 = mLib->keys(map2);
+    std::vector<int> values2 = mLib->values(map2);
+
+    std::vector<char> commonChars;
+
+    for (int i = 0; i < chars1.size(); i++) {
+        for (int j = 0; j < chars2.size(); j++) {
+            if (chars1[i] == chars2[j]) commonChars.push_back(chars1[i]);
+        }
+    }
+    for (int i = 0; i < commonChars.size(); i++) {
+        auto it1 = map1.find(commonChars[i]);
+        auto it2 = map2.find(commonChars[i]);
+        counter += it1->second <= it2->second ? it1->second : it2->second;
+    }
+
+    return counter;
+}
+
+
 int main(int argc, char *args[]) {
-    // std::vector<int> vec = {6, 2, 3, 8};
-    mLib->print(5);    
+    // std::vector<std::string> vec = {"aaba", "aa"};
+    std::string s1 = "aabcc"; 
+    std::string s2 = "adcaa";
+    mLib->print(commonCharacterCount(s1, s2));    
     return 0; 
 }
 
