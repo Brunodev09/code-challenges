@@ -1,11 +1,25 @@
 #include <iostream>
 #include <algorithm>
-#include <vector> 
+#include <vector>
+
+
+void print(std::string s) {
+    std::cout << s << std::endl;
+}
 
 void printIntVector(const std::vector<int> &vec) {
     for (int i = 0; i < vec.size(); i++) {
         std::cout << "-------" << std::endl;
         std::cout << vec[i] << std::endl;
+    }
+}
+
+void printIntMatrix(const std::vector<std::vector<int>> &m) {
+    for (int i = 0; i < m.size(); i++) {
+        for (int j = 0; j < m[i].size(); j++) {
+            print(std::to_string(m[i][j]));
+        }
+        print("------------");
     }
 }
 
@@ -17,6 +31,18 @@ std::vector<int>& concatIntVec(std::vector<int> &v1, std::vector<int> &v2) {
 std::vector<int>& splice(std::vector<int> &vec, int index) {
     vec.erase(vec.begin() + index);
     return vec;
+}
+
+std::vector<std::vector<int>> matrix(int nArr, int nEl, std::vector<int> &v) {
+    std::vector<std::vector<int>> vec2d(nArr);
+    int skip = 0;
+    for (int i = 0; i < nArr; i++) {
+        for (int j = 0; j < nEl; j++) {
+            vec2d[i].push_back(v[j + skip]);
+        }
+        skip += nEl;
+    }
+    return vec2d;
 }
 
 
@@ -70,12 +96,8 @@ bool almostIncreasingSequence(std::vector<int> vec) {
         if (c <= p) {
             init = false;
             std::vector<int> copyVec = vec;
-            if ((p < n) && (c > n || c < p)) {
-                splice(copyVec, i);
-            }
-            else {
-                splice(copyVec, i - 1);
-            }
+            if ((p < n) && (c > n || c < p)) splice(copyVec, i);
+            else splice(copyVec, i - 1);
             bool test = true;
             if (copyVec.size() == 1) return true;
             else if (copyVec.size() == 2 && copyVec[0] >= copyVec[1]) return false;
@@ -124,13 +146,63 @@ int maxStatues(std::vector<int> v) {
 // For n = 2, the output should be shapeArea(n) = 5; For n = 3, the output should be shapeArea(n) = 13.
 
 int shapeArea(int n) {
-    
+    if (n == 1) return n;
+    int count = 1;
+    for (int i = 1; i < n; i++) {
+        count += (4 * i);
+    }
+    return count;
 }
 
+// After becoming famous, the CodeBots decided to move into a new building together.
+// Each of the rooms has a different cost, and some of them are free, but there's a rumour that all the free rooms are haunted! 
+// Since the CodeBots are quite superstitious, they refuse to stay in any of the free rooms, 
+// or any of the rooms below any of the free rooms.
+// Given matrix, a rectangular matrix of integers, where each value represents the cost of the room, 
+// your task is to return the total sum of all rooms that are suitable for the CodeBots
+// (ie: add up all the values that don't appear below a 0).
+// Example
+// For
+// matrix = [[0, 1, 1, 2], 
+//           [0, 5, 0, 0],
+//           [2, 0, 3, 3]] the output should be matrixElementsSum(matrix) = 9.
+// example 1
+// There are several haunted rooms, so we'll disregard them as well as any rooms beneath them. Thus, the answer is 1 + 5 + 1 + 2 = 9.
+// For
+// matrix = [[1, 1, 1, 0],
+//           [0, 5, 0, 1], 
+//           [2, 1, 3, 10]] the output should be matrixElementsSum(matrix) = 9.
+// example 2
+// Note that the free room in the final column makes the full column unsuitable for bots (not just the room directly beneath it).
+// Thus, the answer is 1 + 1 + 1 + 5 + 1 = 9.
+int matrixElementsSum(std::vector<std::vector<int>> matrix) {
+    int counter = 0;
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j = 0; j < matrix[i].size(); j++) {
+            if (i == 0) counter += matrix[i][j];
+            else if (matrix[i - 1][j] == 0) {
+                matrix[i][j] = 0;
+            }
+            else {
+                counter += matrix[i][j];
+            }
+        }
+    }
+    return counter;
+}
+// std::vector<int> elements = {0,1,1,2,0,5,0,0,2,0,3,3};
+// std::vector<std::vector <int>> m = matrix(3, 4, elements);
+// [[0,1,1,2], 
+//  [0,5,0,0], 
+//  [2,0,3,3]]
+
+// [[1,2,3,4,5]]
 int main(int argc, char *args[]) {
-    std::vector<int> vec = {6, 2, 3, 8};
-    std::cout << shapeArea(3) << std::endl;
-    // maxStatues(vec);
+    // std::vector<int> vec = {6, 2, 3, 8};
+    std::vector<int> elements = {1,2,3,4,5};
+    std::vector<std::vector <int>> m = matrix(1, 5, elements);
+    // printIntMatrix(m);
+    std::cout << matrixElementsSum(m) << std::endl;
     return 0; 
 }
 
