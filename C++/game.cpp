@@ -1,50 +1,9 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include "./m.h"
 
-
-void print(std::string s) {
-    std::cout << s << std::endl;
-}
-
-void printIntVector(const std::vector<int> &vec) {
-    for (int i = 0; i < vec.size(); i++) {
-        std::cout << "-------" << std::endl;
-        std::cout << vec[i] << std::endl;
-    }
-}
-
-void printIntMatrix(const std::vector<std::vector<int>> &m) {
-    for (int i = 0; i < m.size(); i++) {
-        for (int j = 0; j < m[i].size(); j++) {
-            print(std::to_string(m[i][j]));
-        }
-        print("------------");
-    }
-}
-
-std::vector<int>& concatIntVec(std::vector<int> &v1, std::vector<int> &v2) {
-    v1.insert(v1.end(), v2.begin(), v2.end());
-    return v1;
-}
-
-std::vector<int>& splice(std::vector<int> &vec, int index) {
-    vec.erase(vec.begin() + index);
-    return vec;
-}
-
-std::vector<std::vector<int>> matrix(int nArr, int nEl, std::vector<int> &v) {
-    std::vector<std::vector<int>> vec2d(nArr);
-    int skip = 0;
-    for (int i = 0; i < nArr; i++) {
-        for (int j = 0; j < nEl; j++) {
-            vec2d[i].push_back(v[j + skip]);
-        }
-        skip += nEl;
-    }
-    return vec2d;
-}
-
+M *mLib = new M();
 
 
 // Given a year, return the century it is in. The first century spans from the year 1 up to and including the year 100, the second - from the year 101 up to and including the year 200, etc.
@@ -96,8 +55,8 @@ bool almostIncreasingSequence(std::vector<int> vec) {
         if (c <= p) {
             init = false;
             std::vector<int> copyVec = vec;
-            if ((p < n) && (c > n || c < p)) splice(copyVec, i);
-            else splice(copyVec, i - 1);
+            if ((p < n) && (c > n || c < p)) mLib->splice(copyVec, i);
+            else mLib->splice(copyVec, i - 1);
             bool test = true;
             if (copyVec.size() == 1) return true;
             else if (copyVec.size() == 2 && copyVec[0] >= copyVec[1]) return false;
@@ -197,12 +156,15 @@ int matrixElementsSum(std::vector<std::vector<int>> matrix) {
 //  [2,0,3,3]]
 
 // [[1,2,3,4,5]]
+// std::vector<int> elements = {1,2,3,4,5};
+// std::vector<std::vector <int>> m = matrix(1, 5, elements);
+// printIntMatrix(m);
+// std::cout << matrixElementsSum(m) << std::endl;
+
+
 int main(int argc, char *args[]) {
     // std::vector<int> vec = {6, 2, 3, 8};
-    std::vector<int> elements = {1,2,3,4,5};
-    std::vector<std::vector <int>> m = matrix(1, 5, elements);
-    // printIntMatrix(m);
-    std::cout << matrixElementsSum(m) << std::endl;
+    mLib->print(5);    
     return 0; 
 }
 
