@@ -1085,9 +1085,9 @@ let Benchmark = require('./Benchmark');
 
 // Given input matrix = 
 // [
-//   [1,2,3],
-//   [4,5,6],
-//   [7,8,9]
+//   [1,2,3], 3 -> 1
+//   [4,5,6], 6 -> 2
+//   [7,8,9]  9 -> 3
 // ],
 
 // rotate the input matrix in-place such that it becomes:
@@ -1096,22 +1096,47 @@ let Benchmark = require('./Benchmark');
 //   [8,5,2],
 //   [9,6,3]
 // ]
+// [
+//	[2,29,20,26,16,28],
+//	[12,27,9,25,13,21],
+//	[32,33,32,2,28,14],
+//	[13,14,32,27,22,26],
+//	[33,1,20, 7,21, 7],
+//	[4,24,1,  6,32,34]]
 
-function createMatrix(n) {
-	let m = new Array(n);
-	for (let i = 0; i < n; i++) {
-		m[i] = new Array(n);
-	}
-	return m;
-}
+// console.log(matrix[y][i], "new")
+// console.log(matrix[x][y], "old")
+// console.log(matrix[j][i])
+// console.log(matrix[x][j])
 
 var rotate = (matrix) => {
-	let rotatedMatrix = createMatrix(matrix.length);
-	for (let i = 0; i < matrix.length; i++) {
-		for (let j = 0; j < matrix[i].length; j++) {
-			rotatedMatrix[j][i]
+	let m = {};
+	for (let i = matrix.length - 1, x = 0; i >= 0 && x < matrix.length; i-- && x++) {
+		for (let j = matrix[i].length - 1, y = 0; j >= 0 && y < matrix[i].length; j-- && y++) {
+
+			if (m[matrix[x][y]]) m[matrix[x][y]] = [...m[matrix[x][y]], y, i];
+			else m[matrix[x][y]] = [y, i];
+			// matrix[y][i] = matrix[x][y];
 		}
 	}
+	for (let key of Object.keys(m)) {
+		const where = m[key];
+
+		let iterator = 0;
+		let point = [];
+		for (let pair of where) {
+			if (iterator >= 1) {
+				point.push(pair);
+				iterator = 0;
+				matrix[point[0]][point[1]] = Number(key);
+				point = [];
+				continue;
+			}
+			point.push(pair);
+			iterator++;
+		}
+	}
+	return matrix;
 };
 
-console.log(rotate([[1,2,3],[4,5,6],[7,8,9]]));
+console.log(rotate([[2,29,20,26,16,28],[12,27,9,25,13,21],[32,33,32,2,28,14],[13,14,32,27,22,26],[33,1,20,7,21,7],[4,24,1,6,32,34]]));
