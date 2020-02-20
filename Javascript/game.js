@@ -935,7 +935,7 @@ var generate = function (numRows) {
 			if (vec[i - 1]) {
 				if (vec[i - 1][j - 1] && vec[i - 1][j]) elements.push(vec[i - 1][j - 1] + vec[i - 1][j]);
 				else elements.push(1);
-			} 
+			}
 		}
 	}
 	return vec;
@@ -1000,15 +1000,15 @@ var generate = function (numRows) {
 
 // Using iterative tabulation from Dynamic Programming. 
 
-var climbStairs = function(n) {
+var climbStairs = function (n) {
 	let golden = [1, 1];
 
 	if (n === 0 || n === 1) return n;
-	
+
 	let sum = 0;
 
 	for (let i = 2; i <= n; i++) {
-		if (i === 2) sum = golden[0] + golden[1]; 
+		if (i === 2) sum = golden[0] + golden[1];
 		sum = golden[i - 1] + golden[i - 2];
 		golden.push(sum);
 	}
@@ -1024,7 +1024,7 @@ var climbStairs = function(n) {
 // Permutation example -> number with 4 digits, ranging from 0-9, digits can't be repeated, how many permutations? 10 * 9 * 8 * 7
 // Four friends for 6 chairs, how many permutations? 6 * 5 * 4 * 3 (four friends, one chair less after each choice)
 
-var permutations = function(n, p) {
+var permutations = function (n, p) {
 	let operator = p;
 	let acc = p;
 
@@ -1058,7 +1058,7 @@ function recursiveFactorial(n) {
 function dpFactorial(n) {
 	let table = [1];
 	for (let i = 1; i <= n; i++) {
-		table[i] =  i * (table[i - 1]);
+		table[i] = i * (table[i - 1]);
 	}
 	return table[n];
 }
@@ -1109,6 +1109,26 @@ let Benchmark = require('./Benchmark');
 // console.log(matrix[j][i])
 // console.log(matrix[x][j])
 
+var rotate2 = (matrix) => {
+	for (let i = 0; i < matrix.length; i++) {
+		for (let j = i; j < matrix[i].length; j++) {
+			const aux = matrix[i][j];
+			matrix[i][j] = matrix[j][i];
+			matrix[j][i] = aux;
+		}
+	}
+	for (let i = 0; i < matrix.length; i++) {
+		matrix[i] = matrix[i].reverse();
+	}
+	return matrix;
+}
+
+console.log(rotate2([
+	[1, 2, 3],
+	[4, 5, 6],
+	[7, 8, 9]
+]))
+
 var rotate = (matrix) => {
 	let m = {};
 	for (let i = matrix.length - 1, x = 0; i >= 0 && x < matrix.length; i-- && x++) {
@@ -1139,4 +1159,4 @@ var rotate = (matrix) => {
 	return matrix;
 };
 
-console.log(rotate([[2,29,20,26,16,28],[12,27,9,25,13,21],[32,33,32,2,28,14],[13,14,32,27,22,26],[33,1,20,7,21,7],[4,24,1,6,32,34]]));
+// console.log(rotate([[2, 29, 20, 26, 16, 28], [12, 27, 9, 25, 13, 21], [32, 33, 32, 2, 28, 14], [13, 14, 32, 27, 22, 26], [33, 1, 20, 7, 21, 7], [4, 24, 1, 6, 32, 34]]));
