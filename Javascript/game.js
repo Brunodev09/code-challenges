@@ -1259,45 +1259,86 @@ var maxDepth2 = function (root) {
 var maxDepth = function (root) {
 	if (!root) return 0;
 	let currentDepth = 0, leftDepth = 0, rightDepth = 0;
+	let max = 0;
 
 	let helper = (node) => {
 		currentDepth++;
-		let leafFlag = 0;
 		if (node.left) {
 			helper(node.left);
-			leafFlag++;
 		}
 		if (node.right) {
 			helper(node.right);
-			leafFlag++;
 		}
-		if (leafFlag === 2) currentDepth--;
+
+		if (max < currentDepth) max = currentDepth;
+		currentDepth--;
 	}
 	if (root.left) helper(root.left);
-	leftDepth = currentDepth;
+	leftDepth = max;
 	currentDepth = 0;
+	max = 0;
 	if (root.right) helper(root.right);
-	rightDepth = currentDepth;
-
-	console.log(rightDepth+1, leftDepth+1)
+	rightDepth = max;
 
 	return Math.max(rightDepth + 1, leftDepth + 1);
 }
 // [0,2,4,1,null,3,-1,5,1,null,6,null,8]
+
+// let tree = {
+// 	val: 0,
+// 	right: {
+// 		val: 4,
+// 		right:
+// 		{
+// 			val: -1,
+// 			right: { val: 8, right: null, left: null },
+// 			left: null
+// 		},
+// 		left:
+// 		{
+// 			val: 3,
+// 			right: { val: 6, right: null, left: null },
+// 			left: null
+// 		}
+// 	},
+// 	left: {
+// 		val: 2,
+// 		right: null,
+// 		left:
+// 		{
+// 			val: 1,
+// 			right: { val: 1, right: null, left: null },
+// 			left: { val: 5, right: null, left: null }
+// 		}
+// 	}
+// }
+
 let tree = {
-	val: 1,
-	right: {
-		val: 3,
-		right: null,
-		left: null
-	},
-	left:
+	val: 3,
+	right:
 	{
-		val: 2,
-		right: null,
-		left: null
-	}
+		val: 20,
+		right: { val: 7, right: null, left: null },
+		left: { val: 15, right: null, left: null }
+	},
+	left: { val: 9, right: null, left: null }
 }
+
+
+// let tree = {
+// 	val: 1,
+// 	right: {
+// 		val: 3,
+// 		right: null,
+// 		left: null
+// 	},
+// 	left:
+// 	{
+// 		val: 2,
+// 		right: null,
+// 		left: null
+// 	}
+// }
 
 
 // let tree = {
