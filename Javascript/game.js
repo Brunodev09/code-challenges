@@ -1123,11 +1123,11 @@ var rotate2 = (matrix) => {
 	return matrix;
 }
 
-console.log(rotate2([
-	[1, 2, 3],
-	[4, 5, 6],
-	[7, 8, 9]
-]))
+// console.log(rotate2([
+// 	[1, 2, 3],
+// 	[4, 5, 6],
+// 	[7, 8, 9]
+// ]))
 
 var rotate = (matrix) => {
 	let m = {};
@@ -1173,6 +1173,185 @@ var rotate = (matrix) => {
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function(root) {
-    
+var maxDepthBFS = function (root) {
+	// BFS approach
+	let queue = [];
+	let values = [];
+
+	queue.push(root);
+
+	while (queue.length) {
+		let node = queue.shift();
+		values.push(node.val);
+		if (node.left) {
+			queue.push(node.left);
+		}
+		if (node.right) {
+			queue.push(node.right);
+		}
+	}
+	return values;
 };
+
+var maxDepthDFS = function (root) {
+	// DFS - PreOrder
+	let values = [];
+	let current = root;
+
+	let helper = (node) => {
+		values.push(node.val);
+		if (node.left) helper(node.left);
+		if (node.right) helper(node.right);
+	}
+
+	helper(current);
+
+	return values;
+}
+
+var maxDepthDFS2 = function (root) {
+	// DFS - InOrder
+	let values = [];
+	let current = root;
+
+	let helper = (node) => {
+		if (node.left) helper(node.left);
+		values.push(node.val);
+		if (node.right) helper(node.right);
+	}
+
+	helper(current);
+
+	return values;
+}
+
+var maxDepth2 = function (root) {
+	if (!root) return 0;
+
+	let queue = [];
+	let depth = 0;
+	let max = 0;
+
+	queue.push(root);
+
+	while (queue.length) {
+		let node = queue.pop();
+
+		let leafFlag = 0;
+		depth++;
+		if (node.left) {
+			queue.push(node.left);
+		} else leafFlag++;
+		if (node.right) {
+			queue.push(node.right);
+		} else leafFlag++;
+
+		if (leafFlag === 2) {
+			if (max < depth) max = depth;
+			// If this statement is true, we found the root.
+			if (depth - 2 === 0) depth--;
+			else depth -= 2;
+		}
+	}
+	return max;
+}
+
+var maxDepth = function (root) {
+	if (!root) return 0;
+	let currentDepth = 0, leftDepth = 0, rightDepth = 0;
+
+	let helper = (node) => {
+		currentDepth++;
+		let leafFlag = 0;
+		if (node.left) {
+			helper(node.left);
+			leafFlag++;
+		}
+		if (node.right) {
+			helper(node.right);
+			leafFlag++;
+		}
+		if (leafFlag === 2) currentDepth--;
+	}
+	if (root.left) helper(root.left);
+	leftDepth = currentDepth;
+	currentDepth = 0;
+	if (root.right) helper(root.right);
+	rightDepth = currentDepth;
+
+	console.log(rightDepth+1, leftDepth+1)
+
+	return Math.max(rightDepth + 1, leftDepth + 1);
+}
+// [0,2,4,1,null,3,-1,5,1,null,6,null,8]
+let tree = {
+	val: 1,
+	right: {
+		val: 3,
+		right: null,
+		left: null
+	},
+	left:
+	{
+		val: 2,
+		right: null,
+		left: null
+	}
+}
+
+
+// let tree = {
+// 	val: 1,
+// 	right: null,
+// 	left:
+// 	{
+// 		val: 2,
+// 		right: null,
+// 		left: null
+// 	}
+// }
+
+// let tree = {
+// 	val: 1,
+// 	right:
+// 	{
+// 		val: 3,
+// 		right: { val: 5, right: null, left: null },
+// 		left: null
+// 	},
+// 	left:
+// 	{
+// 		val: 2,
+// 		right: null,
+// 		left: { val: 4, right: null, left: null }
+// 	}
+// }
+
+// let tree = {
+// 	val: 1,
+// 	right: { val: 3, right: null, left: null },
+// 	left:
+// 	{
+// 		val: 2,
+// 		right: { val: 5, right: null, left: null },
+// 		left: { val: 4, right: null, left: null }
+// 	}
+// }
+
+// let tree = {
+// 	val: 0,
+// 	right:
+// 	{
+// 		val: 4,
+// 		right: { val: -1, right: [], left: null },
+// 		left: { val: 3, right: [], left: null }
+// 	},
+// 	left:
+// 	{
+// 		val: 2,
+// 		right: null,
+// 		left: { val: 1, right: [], left: [] }
+// 	}
+// }
+
+console.log(maxDepth(tree));
