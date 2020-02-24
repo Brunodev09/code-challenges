@@ -1225,36 +1225,6 @@ var maxDepthDFS2 = function (root) {
 	return values;
 }
 
-var maxDepth2 = function (root) {
-	if (!root) return 0;
-
-	let queue = [];
-	let depth = 0;
-	let max = 0;
-
-	queue.push(root);
-
-	while (queue.length) {
-		let node = queue.pop();
-
-		let leafFlag = 0;
-		depth++;
-		if (node.left) {
-			queue.push(node.left);
-		} else leafFlag++;
-		if (node.right) {
-			queue.push(node.right);
-		} else leafFlag++;
-
-		if (leafFlag === 2) {
-			if (max < depth) max = depth;
-			// If this statement is true, we found the root.
-			if (depth - 2 === 0) depth--;
-			else depth -= 2;
-		}
-	}
-	return max;
-}
 
 var maxDepth = function (root) {
 	if (!root) return 0;
@@ -1395,4 +1365,130 @@ let tree = {
 // 	}
 // }
 
-console.log(maxDepth(tree));
+// console.log(maxDepth(tree));
+
+// We're going to make our own Contacts application! The application must perform two types of operations:
+
+// add name, where  is a string denoting a contact name. This must store  as a new contact in the application.
+// find partial, where  is a string denoting a partial name to search the application for. 
+// It must count the number of contacts starting with  and print the count on a new line.
+// Given  sequential add and find operations, perform each operation in order.
+
+// Input Format
+
+// The first line contains a single integer, , denoting the number of operations to perform.
+// Each line i of the n subsequent lines contains an operation in one of the two forms defined above.
+
+// Constraints
+
+// It is guaranteed that  and  contain lowercase English letters only.
+// The input doesn't have any duplicate  for the  operation.
+// Output Format
+
+// For each find partial operation, print the number of contact names starting with  on a new line.
+
+// Sample Input
+
+// 4
+// add hack
+// add hackerrank
+// find hac
+// find hak
+// Sample Output
+
+// 2
+// 0
+// Explanation
+
+// We perform the following sequence of operations:
+
+// Add a contact named hack.
+// Add a contact named hackerrank.
+// Find and print the number of contact names beginning with hac. There are currently two contact names in the application and both of them start with hac, so we print 2 on a new line.
+// Find and print the number of contact names beginning with hak. There are currently two contact names in the application but neither of them start with hak, so we print 0 on a new line.
+
+var contact = (queries) => {
+	let contacts = [];
+	let commands = {
+		"add": (name) => {
+			contacts.push(name);
+		},
+		"find": (partial) => {
+			let count = 0;
+			for (let contact of contacts) {
+				if (contact.startsWith(partial)) count++;
+			}
+			return count;
+		}
+	}
+
+	for (let querie of queries) {
+		if (!querie) continue;
+		let cmd = commands[querie.split(" ")[0]](querie.split(" ")[1]);
+		if (!isNaN(cmd)) {
+			console.log(cmd);
+		}
+	}
+}
+
+// contact([
+// 	"add hack",
+// 	"add hackerrank",
+// 	"find hac",
+// 	"find hak"]);
+
+var isValid = (str) => {
+	if (!str) return true;
+	let bracketsMap = {};
+	let brackets = ["[", "]", "(", ")", "{", "}"];
+	let weights = [];
+	let acc = 0;
+
+	for (let bracket of brackets) {
+		if (bracket === "[") bracketsMap[bracket] = 1;
+		else if (bracket === "]") bracketsMap[bracket] = -1;
+		else if (bracket === "(") bracketsMap[bracket] = 2;
+		else if (bracket === ")") bracketsMap[bracket] = -2;
+		else if (bracket === "{") bracketsMap[bracket] = 3;
+		else if (bracket === "}") bracketsMap[bracket] = -3;
+	}
+	for (let i = 0; i < str.length; i++) {
+		weights.push(bracketsMap[str[i]]);
+	}
+	weights.map(k => acc += k);
+	if (acc) return false;
+
+	let indexes = [];
+	let weigthsEdited = [...weights];
+	for (let i = weigthsEdited.length; i >= 0; i--) {
+		if (weigthsEdited[i] > 0 && weigthsEdited.indexOf(-weigthsEdited[i], i + 1) !== -1) {
+			indexes.push([i, weigthsEdited.indexOf(-weigthsEdited[i], i + 1)]);
+			weigthsEdited[weigthsEdited.indexOf(-weigthsEdited[i], i + 1)] = "#";
+		}
+	}
+	if (!indexes.length) return false;
+	for (let arr of indexes) {
+		let newWeights = weights.slice(arr[0] + 1, arr[1]);
+		if (newWeights.length) {
+			let tMap = {};
+			for (let w of newWeights) {
+				const temp = w < 0 ? w * - 1 : w;
+				if (!tMap[temp]) tMap[temp] = 1;
+				else tMap[temp]++;
+			}
+			for (let k of Object.keys(tMap)) {
+				if (tMap[k] % 2 !== 0) return false;
+			}
+		}
+	}
+
+	return true;
+
+	// for (let i = 0; i < str.length; i++) {
+	// 	if (bracketsMap[str[i]] !== bracketsMap[str[str.length - (i + 1)]]) return false;
+	// }
+	// return true;
+}
+
+console.log(isValid("()()[]([])"))
+// ["{[()]}", "{[(])}", "{{[[(())]]}}"]
