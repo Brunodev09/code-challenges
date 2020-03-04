@@ -891,12 +891,15 @@ var findMedianSortedArrays = function (nums1, nums2) {
 var longestPalindrome = function (s) {
 	let sequence = "";
 	let longest = "";
-	for (let x = 0; x < s.length; x++) {
+	let len = s.length;
+	for (let x = 0; x < len; x++) {
 		for (let i = 0; i < s.length; i++) {
 			sequence += s[i];
-			if (sequence.split('').reverse().join('') === sequence) {
-				if (sequence.length > longest.length) longest = sequence;
+			let reverse = "";
+			for (const char of sequence) {
+				reverse = char + reverse;
 			}
+			if (reverse === sequence && sequence.length > longest.length) longest = sequence;
 		}
 		s = s.substring(1);
 		sequence = "";
@@ -905,7 +908,8 @@ var longestPalindrome = function (s) {
 	return longest;
 };
 
-// console.log(longestPalindrome('civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth'));
+//console.log(longestPalindrome("jglknendplocymmvwtoxvebkekzfdhykknufqdkntnqvgfbahsljkobhbxkvyictzkqjqydczuxjkgecdyhixdttxfqmgksrkyvopwprsgoszftuhawflzjyuyrujrxluhzjvbflxgcovilthvuihzttzithnsqbdxtafxrfrblulsakrahulwthhbjcslceewxfxtavljpimaqqlcbrdgtgjryjytgxljxtravwdlnrrauxplempnbfeusgtqzjtzshwieutxdytlrrqvyemlyzolhbkzhyfyttevqnfvmpqjngcnazmaagwihxrhmcibyfkccyrqwnzlzqeuenhwlzhbxqxerfifzncimwqsfatudjihtumrtjtggzleovihifxufvwqeimbxvzlxwcsknksogsbwwdlwulnetdysvsfkonggeedtshxqkgbhoscjgpiel"))
+//console.log(longestPalindrome('civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth'));
 
 // Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
 /**
@@ -1492,3 +1496,65 @@ var isValid = (str) => {
 
 console.log(isValid("()()[]([])"))
 // ["{[()]}", "{[(])}", "{{[[(())]]}}"]
+
+/* The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+
+Write the code that will take a string and make this conversion given a number of rows:
+
+string convert(string s, int numRows);
+Example 1:
+
+Input: s = "PAYPALISHIRING", numRows = 3
+Output: "PAHNAPLSIIGYIR"
+Example 2:
+
+Input: s = "PAYPALISHIRING", numRows = 4
+Output: "PINALSIGYAHRPI"
+Explanation:
+
+P     I    N
+A   L S  I G
+Y A   H R
+P     I */
+
+/**
+ * @param {string} s
+ * @param {number} numRows
+ * @return {string}
+ */
+var convert = function (s, numRows) {
+	let aux = [];
+	let currIndex = 0;
+	let cycle = 0; // The cycle doesn't count the first and the last letter of each column.
+	let lastIndex = 0;
+
+	for (let i = 0; i < s.length - 1; i++) {
+		if (!cycle) {
+			for (let j = 0; j < numRows; j++) {
+				if (!aux[i]) aux[i] = new Array(numRows);
+				aux[i][j] = s[currIndex];
+				lastIndex = j;
+				currIndex++;
+			}
+			i += numRows;
+			cycle = numRows - 2;
+		}
+		else {
+			cycle--;
+			if (!aux[i + 1]) aux[i + 1] = new Array(numRows);
+			aux[i + 1][lastIndex - 1] = s[currIndex];
+			lastIndex--;
+			currIndex++;
+			i++;
+		}
+	}
+	console.log(aux)
+
+};
+
+console.log(convert("PAYPALISHIRING", 3));
