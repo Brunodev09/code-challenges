@@ -1494,7 +1494,7 @@ var isValid = (str) => {
 	// return true;
 }
 
-console.log(isValid("()()[]([])"))
+// console.log(isValid("()()[]([])"))
 // ["{[()]}", "{[(])}", "{{[[(())]]}}"]
 
 /* The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
@@ -1532,29 +1532,54 @@ var convert = function (s, numRows) {
 	let currIndex = 0;
 	let cycle = 0; // The cycle doesn't count the first and the last letter of each column.
 	let lastIndex = 0;
+	let readStream = "";
+
+	if (s.length === 1) return s;
 
 	for (let i = 0; i < s.length - 1; i++) {
 		if (!cycle) {
 			for (let j = 0; j < numRows; j++) {
-				if (!aux[i]) aux[i] = new Array(numRows);
+				if (!aux[i]) {
+					aux[i] = [];
+				}
 				aux[i][j] = s[currIndex];
 				lastIndex = j;
 				currIndex++;
 			}
-			i += numRows;
+			// i += numRows;
 			cycle = numRows - 2;
 		}
 		else {
 			cycle--;
-			if (!aux[i + 1]) aux[i + 1] = new Array(numRows);
+			if (!aux[i + 1]) {
+				aux[i + 1] = new Array(numRows);
+			}
 			aux[i + 1][lastIndex - 1] = s[currIndex];
 			lastIndex--;
 			currIndex++;
 			i++;
 		}
 	}
+	aux = aux.filter(k => Array.isArray(k));
+
 	console.log(aux)
 
+	if (aux.length > 1) {
+		for (let i = 0; i < aux.length; i++) {
+			for (let j = 0; j < aux.length; j++) {
+				if (aux[j][i]) readStream += aux[j][i];
+			}
+		}
+	}
+	else {
+		for (let i = 0; i < aux.length; i++) {
+			for (let j = 0; j < aux[i].length; j++) {
+				if (aux[i][j]) readStream += aux[i][j];
+			}
+		}
+	}
+
+	return readStream;
 };
 
-console.log(convert("PAYPALISHIRING", 3));
+console.log(convert("AB", 1));
